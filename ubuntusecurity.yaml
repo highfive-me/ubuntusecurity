@@ -1,0 +1,14 @@
+---
+-  name: update
+   hosts: ubuntu
+   gather_facts: false
+   become: yes
+   tasks:
+     - name: copy security repos
+       shell: cat /etc/apt/sources.list | grep secu > /etc/apt/security.sources.list
+
+     - name: update cache
+       apt: update_cache=yes
+ 
+     - name: install sec updates
+       shell: apt-get upgrade -o Dir::Etc::SourceList=/etc/apt/security.sources.list --force-yes -y
